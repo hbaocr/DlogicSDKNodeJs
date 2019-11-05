@@ -11,7 +11,7 @@ console.log('Dlogic Reader firmware version : ',fw_version);
 let ret = reader.ReaderOpen();
 
 if(ret.is_ok==false){
-    throw "Reader open failed: "+ reader.get_details_error_code(ret.code);
+    throw  ret.detail;
 }
 
 
