@@ -81,6 +81,7 @@ class uFCoder {
                 return key;
             }
         }
+        return 'UNKNOWN_CODE';
     }
     GetDllVersionStr() {
         let fc = this.uFRCoder.GetDllVersionStr();
@@ -93,15 +94,13 @@ class uFCoder {
             code: -1
         }
         let res = this.uFRCoder.ReaderOpen();
+        ret.code = res;
+        ret.detail = this.get_details_error_code(res)+'( 0x' + res.toString(16)+' ) : ';
         if (res == status.UFR_OK) {
             ret.is_ok = true;
-            ret.code = res;
-            ret.detail = 'Success to Open';
         } else {
             console.log('Err : ', '0x' + res.toString(16));
             ret.is_ok = false;
-            ret.code = res;
-            ret.detail = 'Err : ' + '0x' + res.toString(16);
         }
         return ret;
     }
@@ -147,15 +146,15 @@ class uFCoder {
             code: -1
         }
         let res = this.uFRCoder.ReaderOpenEx(reader_type, port_name, port_interface, arg);
+        ret.detail = this.get_details_error_code(res)+'( 0x' + res.toString(16)+' ) : ';
         if (res == status.UFR_OK) {
             ret.is_ok = true;
             ret.code = res;
-            ret.detail = 'Success to Open';
+         
         } else {
             console.log('Err : ', '0x' + res.toString(16));
             ret.is_ok = false;
             ret.code = res;
-            ret.detail = 'Err : ' + '0x' + res.toString(16);
         }
         return ret;
     }
@@ -166,15 +165,15 @@ class uFCoder {
         }
 
         let res = this.uFRCoder.ReaderClose();
+        ret.detail = this.get_details_error_code(res)+'( 0x' + res.toString(16)+' ) : ';
         if (res == status.UFR_OK) {
             ret.is_ok = true;
             ret.code = res;
-            ret.detail = '';
+          
         } else {
             console.log('Err : ', '0x' + res.toString(16));
             ret.is_ok = false;
             ret.code = res;
-            ret.detail = 'Err : ' + '0x' + res.toString(16);
         }
         return ret;
     }
@@ -188,7 +187,7 @@ class uFCoder {
         let lpucUidSize = ref.alloc(char);
         let res = this.uFRCoder.GetCardIdEx(lpucSak, aucUid, lpucUidSize);
         ret.code = res;
-        ret.detail = 'Code : ' + '0x' + res.toString(16) + ' : ';
+        ret.detail = this.get_details_error_code(res)+'( 0x' + res.toString(16)+' ) : ';
         switch (res) {
             case status.UFR_OK:
                 ret.is_ok = true;
@@ -216,7 +215,7 @@ class uFCoder {
         let lpucCardType = ref.alloc(char);//allocate memory for char
         let res = this.uFRCoder.GetDlogicCardType(lpucCardType);
         ret.code = res;
-        ret.detail = 'Code : ' + '0x' + res.toString(16) + ' : ';
+          ret.detail = this.get_details_error_code(res)+'( 0x' + res.toString(16)+' ) : ';
         if (res == status.UFR_OK) {
             ret.is_ok = true;
             ret.detail = ret.detail + "OK";
@@ -241,7 +240,7 @@ class uFCoder {
 
         let res = this.uFRCoder.BlockRead_PK(data, block_address, auth_mode, key);
         ret.code = res;
-        ret.detail = 'Code : ' + '0x' + res.toString(16) + ' : ';
+          ret.detail = this.get_details_error_code(res)+'( 0x' + res.toString(16)+' ) : ';
         switch (res) {
             case status.UFR_OK:
                 ret.is_ok = true;
@@ -285,7 +284,7 @@ class uFCoder {
 
         let res = this.uFRCoder.BlockWrite_PK(write_buff, block_address, auth_mode, key);
         ret.code = res;
-        ret.detail = 'Code : ' + '0x' + res.toString(16) + ' : ';
+          ret.detail = this.get_details_error_code(res)+'( 0x' + res.toString(16)+' ) : ';
         switch (res) {
             case status.UFR_OK:
                 ret.is_ok = true;
@@ -325,7 +324,7 @@ class uFCoder {
 
         let res = this.uFRCoder.LinearRead_PK(buff, linear_addr, n_read_byte, n_return_len, auth_mode, key);
         ret.code = res;
-        ret.detail = 'Code : ' + '0x' + res.toString(16) + ' : ';
+          ret.detail = this.get_details_error_code(res)+'( 0x' + res.toString(16)+' ) : ';
         switch (res) {
             case status.UFR_OK:
                 ret.is_ok = true;
@@ -359,7 +358,7 @@ class uFCoder {
         let n_return_len = ref.alloc(int16);//alloc 2 byte buffer for returned data len
         let res = this.uFRCoder.LinearWrite_PK(data_write, linear_addr, n_write_byte, n_return_len, auth_mode, key);
         ret.code = res;
-        ret.detail = 'Code : ' + '0x' + res.toString(16) + ' : ';
+          ret.detail = this.get_details_error_code(res)+'( 0x' + res.toString(16)+' ) : ';
         switch (res) {
             case status.UFR_OK:
                 ret.is_ok = true;
