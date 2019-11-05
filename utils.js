@@ -43,8 +43,13 @@ function is_string(s) {
     return typeof(s) === 'string' || s instanceof String;
 }
 function to_hex_string(buff) {
+    buff = new Buffer.from(buff);
     return buff.toString('hex').match(/.{1,2}/g).join(':');
 }
+
+
+
+
 function get_card_type_from_code(type_code){
     if(type_code==33){
         return "UNKNOWN_MIFARE_CLASSIC_1K"

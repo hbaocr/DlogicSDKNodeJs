@@ -43,6 +43,11 @@ const void_ptr = ref.refType(ref.types.void);
 
 class uFCoder {
     constructor() {
+
+        this.STATUS=status;
+        this.T2T_AUTHENTICATION=ntag_auth_mode;
+        this.DEFAULT_KEY = ntag_default_key;
+
         const platform = process.platform;
         let mathlibLoc = null;
 
@@ -55,6 +60,7 @@ class uFCoder {
         } else {
             throw new Error('unsupported plateform for mathlibLoc')
         }
+        
 
         this.uFRCoder = ffi.Library(mathlibLoc, {
             'GetDllVersionStr': [string, []],
@@ -68,6 +74,13 @@ class uFCoder {
             'LinearRead_PK': [int, [char_ptr, uint16, uint16, uint16_ptr, char, char_ptr]],
             'LinearWrite_PK': [int, [char_ptr, uint16, uint16, uint16_ptr, char, char_ptr]],
         });
+    }
+    get_detail_error_code(err_code){
+        for(var key in status) {
+            if (err_code == status[key]){
+                return key;
+            }
+        }
     }
     GetDllVersionStr() {
         let fc = this.uFRCoder.GetDllVersionStr();
