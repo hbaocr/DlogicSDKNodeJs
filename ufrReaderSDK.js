@@ -49,20 +49,20 @@ class uFCoder {
         this.DEFAULT_KEY = ntag_default_key;
 
         const platform = process.platform;
-        let mathlibLoc = null;
+        let libuFCoder = null;
 
         if (platform === 'win32') {
-            mathlibLoc = './ufr-lib-master/windows/x86_64/uFCoder-x86_64.dll';
+            libuFCoder = './ufr-lib-master/windows/x86_64/uFCoder-x86_64.dll';
         } else if (platform === 'linux') {
-            mathlibLoc = './ufr-lib-master/linux/x86_64/libuFCoder-x86_64.so';
+            libuFCoder = './ufr-lib-master/linux/x86_64/libuFCoder-x86_64.so';
         } else if (platform === 'darwin') {
-            mathlibLoc = './ufr-lib-master/macos/x86_64/libuFCoder-x86_64.dylib'
+            libuFCoder = './ufr-lib-master/macos/x86_64/libuFCoder-x86_64.dylib'
         } else {
             throw new Error('unsupported platform for libuFCoder')
         }
         
 
-        this.uFRCoder = ffi.Library(mathlibLoc, {
+        this.uFRCoder = ffi.Library(libuFCoder, {
             'GetDllVersionStr': [string, []],
             'ReaderOpen': [int, []],
             'ReaderOpenEx': [int, [uint32, string, uint32, string]],
