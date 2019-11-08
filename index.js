@@ -71,5 +71,5 @@ reader_loop.on('next_loop', async (msg) => {
 })
 
 
-reader_loop.emit('next_loop');
+reader_loop.emit('next_loop');//  trigger to start first loop
 
