@@ -2,7 +2,9 @@
 
 * The SDK base on d2xx driver from ftdi
 
-* Only test on window 10. It work, both vcom and d2xx driver can work together.
+* Only test on window 10. 
+    * Install D2XX driver for win: https://www.ftdichip.com/Drivers/CDM/CDM21228_Setup.zip
+    * It work, both vcom and d2xx driver can work together.
 
 * In Linux: 
     *  Follow this link to install D2XX driver : https://www.youtube.com/watch?v=jynlynjOOek
@@ -13,10 +15,11 @@
         sudo chmod 0755 libftd2xx.a libftd2xx.so libftd2xx.so.1.4.8
     ```
 
-    * run `uFCoder1x.sh` as sudo then restart to permently remove the OS builtin FTDI VCP driver. This action will let the linux OS use new installed D2XX driver instead of default builtin VCP one.
+    * run `sudo ./uFCoder1x.sh` as sudo then restart to permently remove the OS builtin FTDI VCP driver. This action will let the linux OS use new installed D2XX driver instead of default builtin VCP one.
 
     ```Sh
     #!/bin/bash
+    # file name : uFCoder1x.sh
     if [ "$(id -u)" = "0" ]; then
         rm "/etc/modprobe.d/ftdi.conf"
         touch "/etc/modprobe.d/ftdi.conf"
@@ -47,7 +50,7 @@
     ```
 
 
-* In MACOS :
+* In MacOsX :
     * Enable "Allow application downloaded from: `everywhere` option. http://osxdaily.com/2016/09/27/allow-apps-from-anywhere-macos-gatekeeper/
 
     * Install libusb by :  `brew install libusb`
