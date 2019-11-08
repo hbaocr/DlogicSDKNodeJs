@@ -147,6 +147,9 @@ class uFCoder {
             is_ok: false,
             code: -1
         }
+        
+        port_name = ref.allocCString(port_name);
+        arg = ref.allocCString(arg);
         let res = this.uFRCoder.ReaderOpenEx(reader_type, port_name, port_interface, arg);
         ret.detail = this.GetDescriptionFromCode(res)+'( 0x' + res.toString(16)+' ) : ';
         if (res == status.UFR_OK) {

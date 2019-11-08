@@ -8,6 +8,9 @@ const reader = new ufrReaderSDK();
 let fw_version = reader.GetDllVersionStr();
 console.log('Dlogic Reader firmware version : ',fw_version);
 
+//let ret = reader.ReaderOpen();
+
+//let ret = reader.ReaderOpenEx("/dev/tty.usbserial-A631LPCL");
 let ret = reader.ReaderOpen();
 
 if(ret.is_ok==false){
