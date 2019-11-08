@@ -4,6 +4,47 @@
 
 * Only test on window 10. It work, both vcom and d2xx driver can work together.
 
+* In Linux: 
+    *  Follow this link to install D2XX driver : https://www.youtube.com/watch?v=jynlynjOOek
+    *  Make sure change all the  D2XX and uFReader lib to 0755
+    ```Sh
+        sudo chmod 0755 ./ufr-lib-master/linux/x86_64/libuFCoder-x86_64.so
+        cd  /usr/local/lib/
+        sudo chmod 0755 libftd2xx.a libftd2xx.so libftd2xx.so.1.4.8
+    ```
+
+    * run `uFCoder1x.sh` as sudo then restart to permently remove the OS builtin FTDI VCP driver. This action will let the linux OS use new installed D2XX driver instead of default builtin VCP one.
+
+    ```Sh
+    #!/bin/bash
+    if [ "$(id -u)" = "0" ]; then
+        rm "/etc/modprobe.d/ftdi.conf"
+        touch "/etc/modprobe.d/ftdi.conf"
+        echo "blacklist ftdi_sio" >> "/etc/modprobe.d/ftdi.conf"
+        echo "blacklist usbserial" >> "/etc/modprobe.d/ftdi.conf"
+        echo "-------------------------------------------------------------------------"
+        echo "Added \"ftdi_conf\" blacklist file to /etc/modprobe.d/ "
+        echo "-------------------------------------------------------------------------"
+        GROUPADD="usb_access"
+        groupadd $GROUPADD
+        echo -n "Enter an existing user  :"
+            read ADDUSER
+        adduser $ADDUSER  $GROUPADD
+        exit 1
+    else
+        echo "You Need To Be Root!"
+    fi
+
+    exec sudo "$0" "$@" # enters root mode, resets script and adds permissions and ftdi.confssss
+    exit 1
+
+    ```
+
+    * By default linux require sudo (root user) to access usb driver. So you need sudo to run index.js
+    ```Sh
+        # sudo /home/<username>/.nvm/versions/node/v10.17.0/bin/node index.js
+        sudo /absolute_path_to_node/node index.js
+    ```
 
 
 * In MACOS :
