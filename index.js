@@ -60,14 +60,14 @@ reader_loop.on('next_loop', async (msg) => {
                 card_uid = '';
                 stage = ReaderStage.SCAN_TAG;
         }
-        reader_loop.emit('next_loop');
+        
     } catch (error) {
         //reset stage to start again
         card_uid = '';
         stage = ReaderStage.SCAN_TAG;
-        reader_loop.emit('next_loop');
+       
     }
-
+    reader_loop.emit('next_loop');
 })
 
 
