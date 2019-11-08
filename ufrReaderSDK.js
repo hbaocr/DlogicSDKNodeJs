@@ -58,7 +58,7 @@ class uFCoder {
         } else if (platform === 'darwin') {
             mathlibLoc = './ufr-lib-master/macos/x86_64/libuFCoder-x86_64.dylib'
         } else {
-            throw new Error('unsupported plateform for mathlibLoc')
+            throw new Error('unsupported platform for libuFCoder')
         }
         
 
